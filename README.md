@@ -3,3 +3,4 @@
 - Dawid - bocheński
 - Bartek - radomszczański
 - Marcin - miński
+- Jan - miński
