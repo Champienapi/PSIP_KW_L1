@@ -5,3 +5,4 @@
 - Marcin - miński
 - Jan - miński
 - Stanisław - turecki
+- Dominik - koniński
