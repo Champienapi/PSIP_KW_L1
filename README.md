@@ -4,3 +4,4 @@
 - Bartek - radomszczański
 - Marcin - miński
 - Jan - miński
+- Stanisław - turecki
