@@ -1,3 +1,14 @@
 # PSIP_KW_L1
 - Kacper - Legnicki
-
+- Dawid - bocheński
+- Bartek - radomszczański
+- Marcin - miński
+- Jan - miński
+- Stanisław - turecki
+- Dominik - koniński
+- Jan - warszawski
+- Jakub - chełmski
+- Tymoteusz - toruński
+- Daniel - sochaczewski
+- Julia - hajnowski
+- Michał - biłgorajski
