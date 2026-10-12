@@ -2,3 +2,4 @@
 - Kacper - Legnicki
 - Dawid - bocheński
 - Bartek - radomszczański
+- Marcin - miński
