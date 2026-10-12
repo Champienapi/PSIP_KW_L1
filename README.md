@@ -10,5 +10,6 @@
 - Jakub - chełmski
 - Tymoteusz - toruński
 - Daniel - sochaczewski
+- Maciej - kutnowski
 - Julia - hajnowski
 - Michał - biłgorajski
