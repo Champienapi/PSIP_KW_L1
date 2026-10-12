@@ -8,3 +8,4 @@
 - Dominik - koniński
 - Jan - warszawski
 - Jakub - chełmski
+- Tymoteusz - toruński
