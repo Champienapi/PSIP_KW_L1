@@ -9,3 +9,4 @@
 - Jan - warszawski
 - Jakub - chełmski
 - Tymoteusz - toruński
+- Daniel - sochaczewski
