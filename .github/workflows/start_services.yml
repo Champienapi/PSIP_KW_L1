@@ -1,0 +1,53 @@
+﻿name: Start PostGIS services
+
+on:
+  push:
+    branches:
+      - env-test
+      - env-qa
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: postgis-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  start-services:
+    if: contains(fromJSON('["env-test","env-qa","main"]'), github.ref_name)
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Select database port
+        shell: bash
+        run: |
+          case "${{ github.ref_name }}" in
+            env-test) echo "POSTGRES_PORT=5544" >> "$GITHUB_ENV" ;;
+            env-qa)   echo "POSTGRES_PORT=5545" >> "$GITHUB_ENV" ;;
+            main)     echo "POSTGRES_PORT=5546" >> "$GITHUB_ENV" ;;
+            *) exit 1 ;;
+          esac
+
+      - name: Start Docker Compose
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        shell: bash
+        run: |
+          docker compose \
+            -p "remote-db-${{ github.ref_name }}" \
+            -f Docker-compose-remote.yml \
+            up -d --build --wait
+
+      - name: Show container status
+        shell: bash
+        run: |
+          docker compose \
+            -p "remote-db-${{ github.ref_name }}" \
+            -f Docker-compose-remote.yml \
+            ps

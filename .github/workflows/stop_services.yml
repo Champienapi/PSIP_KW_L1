@@ -1,0 +1,35 @@
+name: Stop PostGIS services
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to stop"
+        required: true
+        type: choice
+        options:
+          - env-test
+          - env-qa
+          - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: postgis-${{ inputs.environment }}
+  cancel-in-progress: false
+
+jobs:
+  stop-services:
+    runs-on: self-hosted
+    env:
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_PORT: '5544'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Stop containers
+        shell: bash
+        run: |
+          docker compose -p "remote-db-${{ inputs.environment }}" -f Docker-compose-remote.yml stop
