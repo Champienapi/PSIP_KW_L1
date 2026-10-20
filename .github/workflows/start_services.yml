@@ -45,9 +45,12 @@ jobs:
             up -d --build --wait
 
       - name: Show container status
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         shell: bash
         run: |
           docker compose \
             -p "remote-db-${{ github.ref_name }}" \
             -f Docker-compose-remote.yml \
             ps
+
