@@ -1,0 +1,41 @@
+﻿name: Destroy PostGIS services
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to destroy"
+        required: true
+        type: choice
+        options:
+          - env-test
+          - env-qa
+          - main
+      delete_data:
+        description: "Delete database data permanently?"
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: postgis-${{ inputs.environment }}
+  cancel-in-progress: false
+
+jobs:
+  destroy-services:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Remove containers
+        shell: bash
+        run: |
+          if [ "${{ inputs.delete_data }}" = "true" ]; then
+            docker compose -p "remote-db-${{ inputs.environment }}" -f Docker-compose-remote.yml down --volumes
+          else
+            docker compose -p "remote-db-${{ inputs.environment }}" -f Docker-compose-remote.yml down
+          fi

@@ -1,0 +1,39 @@
+﻿services:
+  postgis:
+    build:
+      context: .
+      dockerfile: docker/postgis/Dockerfile
+    environment:
+      POSTGRES_USER: psip
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Password required}
+      POSTGRES_DB: psip
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:?Port required}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U psip -d psip"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  python:
+    build:
+      context: .
+      dockerfile: docker/python/Dockerfile
+    environment:
+      PGPASSWORD: ${POSTGRES_PASSWORD:?Password required}
+      PGHOST: postgis
+      PGPORT: "5432"
+      PGUSER: psip
+      PGDATABASE: psip
+    volumes:
+      - ./app:/app:ro
+      - ./data:/data:ro
+    depends_on:
+      postgis:
+        condition: service_healthy
+    command: ["tail", "-f", "/dev/null"]
+
+volumes:
+  pgdata:
