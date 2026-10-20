@@ -1,4 +1,4 @@
-﻿name: Destroy PostGIS services
+name: Destroy PostGIS services
 
 on:
   workflow_dispatch:
@@ -27,6 +27,9 @@ concurrency:
 jobs:
   destroy-services:
     runs-on: self-hosted
+    env:
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_PORT: '5544'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

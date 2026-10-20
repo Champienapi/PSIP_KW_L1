@@ -1,4 +1,4 @@
-﻿name: Stop PostGIS services
+name: Stop PostGIS services
 
 on:
   workflow_dispatch:
@@ -22,6 +22,9 @@ concurrency:
 jobs:
   stop-services:
     runs-on: self-hosted
+    env:
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_PORT: '5544'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

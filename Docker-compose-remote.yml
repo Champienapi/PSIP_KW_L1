@@ -20,16 +20,13 @@
   python:
     build:
       context: .
-      dockerfile: docker/python/Dockerfile
+      dockerfile: docker/python/Dockerfile.remote
     environment:
       PGPASSWORD: ${POSTGRES_PASSWORD:?Password required}
       PGHOST: postgis
       PGPORT: "5432"
       PGUSER: psip
       PGDATABASE: psip
-    volumes:
-      - ./app:/app:ro
-      - ./data:/data:ro
     depends_on:
       postgis:
         condition: service_healthy
